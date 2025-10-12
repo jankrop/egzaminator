@@ -114,7 +114,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/incorrectContainer">
 
             <LinearLayout

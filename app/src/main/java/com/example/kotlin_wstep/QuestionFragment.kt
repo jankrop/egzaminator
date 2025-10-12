@@ -2,23 +2,27 @@ package com.example.kotlin_wstep
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 
 class QuestionFragment : Fragment(R.layout.fragment_question) {
-    private var questionId: Int? = null
+    private var question: String? = null
+    private var answers: Array<String>? = null
     private var correctAnswer: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            questionId = it.getInt("questionId")
+            question = it.getString("question")
+            answers = it.getStringArray("answers")
             correctAnswer = it.getInt("correctAnswer")
         }
     }
@@ -27,16 +31,16 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         super.onViewCreated(view, savedInstanceState)
 
         val questionView = view.findViewById<TextView>(R.id.questionView)
-        questionView.text = when (questionId) {
-            0 -> "Jak długą trzeba mieć brodę żeby zostać sysadminem?"
-            1 -> "Jak napisać pętlę for w HTMLu?"
-            2 -> "Dlaczego JavaScript nas zachwyca?"
-            else -> "Nie znaleziono pytania"
+        questionView.text = question
+
+        val answersView = view.findViewById<RadioGroup>(R.id.answers)
+        for (i in 0..3) {
+            (answersView.getChildAt(i) as RadioButton).text = answers?.get(i)
         }
 
         val checkButtonContainer = view.findViewById<FrameLayout>(R.id.checkButtonContainer)
-        val correctContainer = view.findViewById<FrameLayout>(R.id.correctContainer)
-        val incorrectContainer = view.findViewById<FrameLayout>(R.id.incorrectContainer)
+        val correctContainer = view.findViewById<LinearLayout>(R.id.correctContainer)
+        val incorrectContainer = view.findViewById<LinearLayout>(R.id.incorrectContainer)
 
         val correctAnswerText = incorrectContainer.findViewById<TextView>(R.id.correctAnswerText)
 
