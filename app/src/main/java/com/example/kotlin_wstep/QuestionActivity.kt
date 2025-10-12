@@ -8,7 +8,12 @@ class QuestionActivity : AppCompatActivity(R.layout.activity_question) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val fragment = QuestionFragment()
+            val fragment = QuestionFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("questionId", (0..2).random())
+                    putInt("correctAnswer", 1)
+                }
+            }
             supportFragmentManager.beginTransaction()
                 .replace(R.id.questionContainer, fragment)
                 .commit()
