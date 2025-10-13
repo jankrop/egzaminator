@@ -2,14 +2,12 @@ package com.example.kotlin_wstep
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 
 class QuestionFragment : Fragment(R.layout.fragment_question) {
