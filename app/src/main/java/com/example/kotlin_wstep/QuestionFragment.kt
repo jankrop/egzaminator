@@ -1,5 +1,6 @@
 package com.example.kotlin_wstep
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
@@ -10,10 +11,26 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 
+interface OnNextQuestionListener {
+    fun onNextQuestion(isCorrect: Boolean)
+}
+
 class QuestionFragment : Fragment(R.layout.fragment_question) {
+    private var listener: OnNextQuestionListener? = null
+
     private var question: String? = null
     private var answers: Array<String>? = null
     private var correctAnswer: Int? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? OnNextQuestionListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +80,14 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
                 correctAnswerText.text = "Poprawna odpowiedź: ${correctAnswerLetter}"
                 incorrectContainer.visibility = View.VISIBLE
             }
+        }
+
+        view.findViewById<Button>(R.id.button_forward_correct).setOnClickListener {
+            listener?.onNextQuestion(true)
+        }
+
+        view.findViewById<Button>(R.id.button_forward_incorrect).setOnClickListener {
+            listener?.onNextQuestion(false)
         }
     }
 }

@@ -13,14 +13,12 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
+            android:id="@+id/scoreToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="Pytanie 17/40"
-            app:subtitle="13 poprawnych, 3 błędne (81%)"
             app:titleTextColor="@color/white"
             app:subtitleTextColor="@color/white"/>
 
