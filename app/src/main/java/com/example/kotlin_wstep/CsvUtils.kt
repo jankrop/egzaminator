@@ -19,7 +19,7 @@ object CsvUtils {
                         line[0],
                         line.slice(1..4).toTypedArray(),
                         line[5].toIntOrNull() ?: 0,
-                        line[6],
+                        line[6].toIntOrNull() ?: 0,
                         ))
                 }
             }

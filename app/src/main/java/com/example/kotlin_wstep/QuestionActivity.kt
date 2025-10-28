@@ -3,7 +3,6 @@ package com.example.kotlin_wstep
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import kotlin.math.round
 
 class QuestionActivity : AppCompatActivity(R.layout.activity_question), OnNextQuestionListener {
     private var correctAnswers = 0
@@ -26,6 +25,7 @@ class QuestionActivity : AppCompatActivity(R.layout.activity_question), OnNextQu
                 putString("question", test[questionId].question)
                 putStringArray("answers", test[questionId].answers)
                 putInt("correctAnswer", test[questionId].correctAnswer)
+                putInt("imageId", test[questionId].imageId)
             }
         }
         supportFragmentManager.beginTransaction()

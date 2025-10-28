@@ -7,6 +7,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
     private var question: String? = null
     private var answers: Array<String>? = null
     private var correctAnswer: Int? = null
+    private var imageId: Int? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -39,6 +41,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
             question = it.getString("question")
             answers = it.getStringArray("answers")
             correctAnswer = it.getInt("correctAnswer")
+            imageId = it.getInt("imageId")
         }
     }
 
@@ -47,6 +50,16 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
 
         val questionView = view.findViewById<TextView>(R.id.questionView)
         questionView.text = question
+
+        val imageView = view.findViewById<ImageView>(R.id.imageView)
+        if (imageId == 0) imageView.visibility = View.GONE
+        else imageView.setImageResource(
+            resources.getIdentifier(
+                "image_${imageId}",
+                "drawable",
+                context?.packageName
+            )
+        )
 
         val answersView = view.findViewById<RadioGroup>(R.id.answers)
         for (i in 0..3) {
