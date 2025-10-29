@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.HorizontalScrollView
 import androidx.fragment.app.Fragment
 
 interface OnNextQuestionListener {
@@ -51,8 +52,9 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         val questionView = view.findViewById<TextView>(R.id.questionView)
         questionView.text = question
 
-        val imageView = view.findViewById<ImageView>(R.id.imageView)
-        if (imageId == 0) imageView.visibility = View.GONE
+        val imageContainer = view.findViewById<HorizontalScrollView>(R.id.imageContainer)
+        val imageView = view.findViewById<ImageView>(R.id.questionImage)
+        if (imageId == 0) imageContainer.visibility = View.GONE
         else imageView.setImageResource(
             resources.getIdentifier(
                 "image_${imageId}",
