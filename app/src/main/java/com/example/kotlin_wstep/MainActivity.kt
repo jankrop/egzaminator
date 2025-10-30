@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         findViewById<Button>(R.id.startQuestionsButton)
             .setOnClickListener {
-                val intent = Intent(this, QuestionActivity::class.java)
+                val intent = Intent(this, TestActivity::class.java)
                 startActivity(intent)
             }
     }

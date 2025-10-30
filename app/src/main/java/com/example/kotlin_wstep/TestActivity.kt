@@ -4,14 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class QuestionActivity : AppCompatActivity(R.layout.activity_question), OnNextQuestionListener {
+class TestActivity : AppCompatActivity(R.layout.activity_test), OnNextQuestionListener {
     private var correctAnswers = 0
     private var wrongAnswers = 0
     private var test: List<Question> = emptyList()
 
     fun createFragment() {
         val questionId = correctAnswers + wrongAnswers
-        if (questionId < 0 || questionId >= 40) return
 
         val correctAnswerPercentage = if (questionId == 0) 0 else correctAnswers * 100 / questionId
 
@@ -20,14 +19,23 @@ class QuestionActivity : AppCompatActivity(R.layout.activity_question), OnNextQu
         toolbar.subtitle = "${correctAnswers} poprawnych, ${wrongAnswers} błędnych " +
                 "(${correctAnswerPercentage}%)"
 
-        val fragment = QuestionFragment().apply {
-            arguments = Bundle().apply {
-                putString("question", test[questionId].question)
-                putStringArray("answers", test[questionId].answers)
-                putInt("correctAnswer", test[questionId].correctAnswer)
-                putInt("imageId", test[questionId].imageId)
+        val fragment = if (questionId < 3) (
+            QuestionFragment().apply {
+                arguments = Bundle().apply {
+                    putString("question", test[questionId].question)
+                    putStringArray("answers", test[questionId].answers)
+                    putInt("correctAnswer", test[questionId].correctAnswer)
+                    putInt("imageId", test[questionId].imageId)
+                }
             }
-        }
+        ) else (
+            FinishFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("correct", correctAnswers)
+                }
+            }
+        )
+
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.slide_in,
