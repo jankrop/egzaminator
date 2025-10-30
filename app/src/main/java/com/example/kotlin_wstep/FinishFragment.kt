@@ -22,7 +22,7 @@ class FinishFragment : Fragment(R.layout.fragment_finish) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val percentage = ((correct ?: 0) / 3.0 * 100).toInt()
+        val percentage = ((correct ?: 0) / 40.0 * 100).toInt()
         val endText = when (percentage) {
             in 0..<50 -> "Próbuj dalej!"
             in 50..<55 -> "Mało brakowało!"
