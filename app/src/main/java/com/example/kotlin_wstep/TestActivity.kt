@@ -15,7 +15,7 @@ class TestActivity : AppCompatActivity(R.layout.activity_test), OnNextQuestionLi
         val correctAnswerPercentage = if (questionId == 0) 0 else correctAnswers * 100 / questionId
 
         val toolbar = findViewById<Toolbar>(R.id.scoreToolbar)
-        toolbar.title = "Pytanie ${questionId+1}/40"
+        toolbar.title = if (questionId < 3) "Pytanie ${questionId+1}/40" else "Koniec testu"
         toolbar.subtitle = "${correctAnswers} poprawnych, ${wrongAnswers} błędnych " +
                 "(${correctAnswerPercentage}%)"
 
