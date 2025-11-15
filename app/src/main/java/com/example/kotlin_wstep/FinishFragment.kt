@@ -22,6 +22,11 @@ class FinishFragment : Fragment(R.layout.fragment_finish) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val db = DatabaseProvider.getDatabase(view.context)
+        db.attemptDao().insertAttempt(
+            Attempt(correctAnswers = correct ?: 0)
+        )
+
         val percentage = ((correct ?: 0) / 40.0 * 100).toInt()
         val endText = when (percentage) {
             in 0..<50 -> "Próbuj dalej!"

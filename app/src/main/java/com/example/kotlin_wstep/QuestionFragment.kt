@@ -14,12 +14,13 @@ import android.widget.HorizontalScrollView
 import androidx.fragment.app.Fragment
 
 interface OnNextQuestionListener {
-    fun onNextQuestion(isCorrect: Boolean)
+    fun onNextQuestion(id: Int?, isCorrect: Boolean)
 }
 
 class QuestionFragment : Fragment(R.layout.fragment_question) {
     private var listener: OnNextQuestionListener? = null
 
+    private var questionId: Int? = null
     private var question: String? = null
     private var answers: Array<String>? = null
     private var correctAnswer: Int? = null
@@ -39,6 +40,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
+            questionId = it.getInt("questionId")
             question = it.getString("question")
             answers = it.getStringArray("answers")
             correctAnswer = it.getInt("correctAnswer")
@@ -98,11 +100,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         }
 
         view.findViewById<Button>(R.id.button_forward_correct).setOnClickListener {
-            listener?.onNextQuestion(true)
+            listener?.onNextQuestion(questionId, true)
         }
 
         view.findViewById<Button>(R.id.button_forward_incorrect).setOnClickListener {
-            listener?.onNextQuestion(false)
+            listener?.onNextQuestion(questionId, false)
         }
     }
 }
