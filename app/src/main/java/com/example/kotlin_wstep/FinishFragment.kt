@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import java.time.LocalDateTime
 
 class FinishFragment : Fragment(R.layout.fragment_finish) {
     private var correct: Int? = null
@@ -24,7 +26,7 @@ class FinishFragment : Fragment(R.layout.fragment_finish) {
 
         val db = DatabaseProvider.getDatabase(view.context)
         db.attemptDao().insertAttempt(
-            Attempt(correctAnswers = correct ?: 0)
+            Attempt(correctAnswers = correct ?: 0, createdAt = LocalDateTime.now().toString())
         )
 
         val percentage = ((correct ?: 0) / 40.0 * 100).toInt()
@@ -49,5 +51,9 @@ class FinishFragment : Fragment(R.layout.fragment_finish) {
             in 50..<75 -> Color.rgb(255, 193, 7)
             else -> Color.rgb(76, 175, 80)
         })
+
+        view.findViewById<Button>(R.id.finishButton).setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 }

@@ -21,7 +21,7 @@ class TestActivity : AppCompatActivity(R.layout.activity_test), OnNextQuestionLi
         toolbar.subtitle = "${correctAnswers} poprawnych, ${wrongAnswers} błędnych " +
                 "(${correctAnswerPercentage}%)"
 
-        val fragment = if (questionId < 40) (
+        val fragment = if (questionId < 3) (
             QuestionFragment().apply {
                 arguments = Bundle().apply {
                     putInt("questionId", test[questionId].questionId)
