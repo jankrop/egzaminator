@@ -2,6 +2,7 @@ package com.example.kotlin_wstep
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -11,7 +12,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.HorizontalScrollView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 interface OnNextQuestionListener {
     fun onNextQuestion(id: Int?, isCorrect: Boolean)
@@ -25,6 +29,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
     private var answers: Array<String>? = null
     private var correctAnswer: Int? = null
     private var imageId: Int? = null
+    private var selectedAnswer: Int? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -80,7 +85,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
             val answersView = view.findViewById<RadioGroup>(R.id.answers)
             val selectedRadioId = answersView.checkedRadioButtonId
             val selectedRadio = view.findViewById<RadioButton>(selectedRadioId)
-            val selectedAnswer = answersView.indexOfChild(selectedRadio)
+            selectedAnswer = answersView.indexOfChild(selectedRadio)
 
             checkButtonContainer.visibility = View.GONE
 
@@ -105,6 +110,57 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
 
         view.findViewById<Button>(R.id.button_forward_incorrect).setOnClickListener {
             listener?.onNextQuestion(questionId, false)
+        }
+
+        val askAIButton = view.findViewById<Button>(R.id.button_ask_ai)
+        askAIButton.setOnClickListener {
+            askAIButton.text = "Ładowanie..."
+            askAIButton.isEnabled = false
+
+            lifecycleScope.launch {
+                try {
+                    val body = MistralAPIRequest(messages = arrayOf(
+                        MistralAPIMessage(
+                            "system",
+                            "Jesteś użyty w aplikacji do uczenia się do egzaminu o " +
+                                    "podstawach web developmentu (HTML, CSS, JS, PHP) oraz " +
+                                    "bazach danych. Dostaniesz pytanie, poprawną odpowiedź i " +
+                                    "błędną odpowiedź użytkownika. Powiedz, czemu odpowiedź " +
+                                    "użytkownika jest błędna, i czemu poprawna odpowiedź jest " +
+                                    "poprawna. Używaj krótkich wypowiedzi i załóż, że " +
+                                    "użytkownik jest początkujący w temacie. Nie używaj " +
+                                    "Markdown."
+                        ),
+                        MistralAPIMessage(
+                            "user",
+                            "Mam pytanie: \"$question\". Poprawna odpowiedź: \"${answers?.get(correctAnswer ?: 0)}\". Moja odpowiedź: \"${answers?.get(selectedAnswer ?: 0)}\"."
+                        )
+                    ))
+
+                    Log.d("API", body.toString())
+
+                    val apiResponse = APIClient.api.getCompletions(
+                        "Bearer iBHrFAFyjeaJfi98974SFUyCRtj6mfXM", body
+                    )
+
+                    val message = apiResponse.choices[0].message.content
+
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setMessage(message).setPositiveButton("Dzięki!") { dialog, which -> }
+                    val dialog = builder.create()
+                    dialog.show()
+                    askAIButton.text = "Zapytaj AI"
+                    askAIButton.isEnabled = true
+                } catch (e: Exception) {
+                    Log.e("API", "Error", e)
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setMessage("Wystąpił błąd").setPositiveButton("OK") { dialog, which -> }
+                    val dialog = builder.create()
+                    dialog.show()
+                    askAIButton.text = "Zapytaj AI"
+                    askAIButton.isEnabled = true
+                }
+            }
         }
     }
 }
