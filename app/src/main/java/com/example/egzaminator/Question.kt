@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 
 data class Question(

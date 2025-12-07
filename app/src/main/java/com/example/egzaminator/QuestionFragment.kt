@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 import android.content.Context
 import android.os.Bundle
@@ -113,6 +113,8 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         }
 
         val askAIButton = view.findViewById<Button>(R.id.button_ask_ai)
+        if (imageId == 0) askAIButton.visibility = View.VISIBLE
+
         askAIButton.setOnClickListener {
             askAIButton.text = "Ładowanie..."
             askAIButton.isEnabled = false
@@ -140,13 +142,18 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
                     Log.d("API", body.toString())
 
                     val apiResponse = APIClient.api.getCompletions(
-                        "Bearer iBHrFAFyjeaJfi98974SFUyCRtj6mfXM", body
+                        "Bearer ${BuildConfig.API_KEY}", body
                     )
 
                     val message = apiResponse.choices[0].message.content
 
                     val builder = AlertDialog.Builder(requireContext())
-                    builder.setMessage(message).setPositiveButton("Dzięki!") { dialog, which -> }
+                    builder
+                        .setTitle("Zapytaj AI")
+                        .setMessage("Poprawna odpowiedź: \"${answers?.get(correctAnswer ?: 0)}\"\n" +
+                                "Moja odpowiedź: \"${answers?.get(selectedAnswer ?: 0)}\"\n\n" +
+                                message)
+                        .setPositiveButton("Dzięki!") { dialog, which -> }
                     val dialog = builder.create()
                     dialog.show()
                     askAIButton.text = "Zapytaj AI"
@@ -154,7 +161,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
                 } catch (e: Exception) {
                     Log.e("API", "Error", e)
                     val builder = AlertDialog.Builder(requireContext())
-                    builder.setMessage("Wystąpił błąd").setPositiveButton("OK") { dialog, which -> }
+                    builder.setTitle("Zapytaj AI").setMessage("Wystąpił błąd (${e.message})").setPositiveButton("OK") { dialog, which -> }
                     val dialog = builder.create()
                     dialog.show()
                     askAIButton.text = "Zapytaj AI"

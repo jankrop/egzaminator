@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

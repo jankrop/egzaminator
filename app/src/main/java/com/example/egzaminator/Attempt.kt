@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

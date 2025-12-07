@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +21,7 @@ class TestActivity : AppCompatActivity(R.layout.activity_test), OnNextQuestionLi
         toolbar.subtitle = "${correctAnswers} poprawnych, ${wrongAnswers} błędnych " +
                 "(${correctAnswerPercentage}%)"
 
-        val fragment = if (questionId < 3) (
+        val fragment = if (questionId < 40) (
             QuestionFragment().apply {
                 arguments = Bundle().apply {
                     putInt("questionId", test[questionId].questionId)

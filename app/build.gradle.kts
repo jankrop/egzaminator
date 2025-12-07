@@ -1,23 +1,30 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     id("org.jetbrains.kotlin.android") version "2.2.21"
     id("kotlin-kapt")
 }
 
-
+val props = Properties()
+file("${rootDir}/local.properties").inputStream().use { props.load(it) }
 
 android {
-    namespace = "com.example.kotlin_wstep"
+
+
+
+    namespace = "com.example.egzaminator"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.kotlin_wstep"
+        applicationId = "com.example.egzaminator"
         minSdk = 29
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"${props["API_KEY"]}\"")
     }
 
     buildTypes {
@@ -35,6 +42,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

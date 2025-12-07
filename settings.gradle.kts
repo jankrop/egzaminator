@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kotlin_wstep"
+rootProject.name = "egzaminator"
 include(":app")
  

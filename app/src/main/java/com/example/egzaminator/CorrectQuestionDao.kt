@@ -1,4 +1,4 @@
-package com.example.kotlin_wstep
+package com.example.egzaminator
 
 import androidx.room.Dao
 import androidx.room.Insert
