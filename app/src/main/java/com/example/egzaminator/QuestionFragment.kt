@@ -15,6 +15,9 @@ import android.widget.HorizontalScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.egzaminator.api.APIClient
+import com.example.egzaminator.api.MistralAPIMessage
+import com.example.egzaminator.api.MistralAPIRequest
 import kotlinx.coroutines.launch
 
 interface OnNextQuestionListener {
@@ -121,23 +124,29 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
 
             lifecycleScope.launch {
                 try {
-                    val body = MistralAPIRequest(messages = arrayOf(
-                        MistralAPIMessage(
-                            "system",
-                            "Jesteś użyty w aplikacji do uczenia się do egzaminu o " +
-                                    "podstawach web developmentu (HTML, CSS, JS, PHP) oraz " +
-                                    "bazach danych. Dostaniesz pytanie, poprawną odpowiedź i " +
-                                    "błędną odpowiedź użytkownika. Powiedz, czemu odpowiedź " +
-                                    "użytkownika jest błędna, i czemu poprawna odpowiedź jest " +
-                                    "poprawna. Używaj krótkich wypowiedzi i załóż, że " +
-                                    "użytkownik jest początkujący w temacie. Nie używaj " +
-                                    "Markdown."
-                        ),
-                        MistralAPIMessage(
-                            "user",
-                            "Mam pytanie: \"$question\". Poprawna odpowiedź: \"${answers?.get(correctAnswer ?: 0)}\". Moja odpowiedź: \"${answers?.get(selectedAnswer ?: 0)}\"."
+                    val body = MistralAPIRequest(
+                        messages = arrayOf(
+                            MistralAPIMessage(
+                                "system",
+                                "Jesteś użyty w aplikacji do uczenia się do egzaminu o " +
+                                        "podstawach web developmentu (HTML, CSS, JS, PHP) oraz " +
+                                        "bazach danych. Dostaniesz pytanie, poprawną odpowiedź i " +
+                                        "błędną odpowiedź użytkownika. Powiedz, czemu odpowiedź " +
+                                        "użytkownika jest błędna, i czemu poprawna odpowiedź jest " +
+                                        "poprawna. Używaj krótkich wypowiedzi i załóż, że " +
+                                        "użytkownik jest początkujący w temacie. Nie używaj " +
+                                        "Markdown."
+                            ),
+                            MistralAPIMessage(
+                                "user",
+                                "Mam pytanie: \"$question\". Poprawna odpowiedź: \"${
+                                    answers?.get(
+                                        correctAnswer ?: 0
+                                    )
+                                }\". Moja odpowiedź: \"${answers?.get(selectedAnswer ?: 0)}\"."
+                            )
                         )
-                    ))
+                    )
 
                     Log.d("API", body.toString())
 

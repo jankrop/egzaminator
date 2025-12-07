@@ -1,4 +1,4 @@
-package com.example.egzaminator
+package com.example.egzaminator.api
 
 data class ChatCompletionChoice(
     val message: MistralAPIMessage

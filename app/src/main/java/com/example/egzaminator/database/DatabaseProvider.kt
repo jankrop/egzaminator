@@ -1,4 +1,4 @@
-package com.example.egzaminator
+package com.example.egzaminator.database
 
 import android.content.Context
 import androidx.room.Room

@@ -1,4 +1,4 @@
-package com.example.egzaminator
+package com.example.egzaminator.database
 
 import androidx.room.Dao
 import androidx.room.Insert

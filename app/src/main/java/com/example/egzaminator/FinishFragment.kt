@@ -8,6 +8,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.egzaminator.database.Attempt
+import com.example.egzaminator.database.DatabaseProvider
 import java.time.LocalDateTime
 
 class FinishFragment : Fragment(R.layout.fragment_finish) {

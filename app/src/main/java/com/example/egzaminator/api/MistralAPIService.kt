@@ -1,4 +1,4 @@
-package com.example.egzaminator
+package com.example.egzaminator.api
 
 import retrofit2.http.Header
 import retrofit2.http.POST

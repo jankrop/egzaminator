@@ -1,6 +1,7 @@
-package com.example.egzaminator
+package com.example.egzaminator.database
 
 import android.content.Context
+import com.example.egzaminator.Question
 import com.opencsv.CSVReader
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -17,13 +18,15 @@ object CsvUtils {
                     line = reader.readNext() ?: break
                     if (line[0].equals("question", ignoreCase = true)) continue
 
-                    result.add(Question(
-                        id,
-                        line[0],
-                        line.slice(1..4).toTypedArray(),
-                        line[5].toIntOrNull() ?: 0,
-                        line[6].toIntOrNull() ?: 0,
-                        ))
+                    result.add(
+                        Question(
+                            id,
+                            line[0],
+                            line.slice(1..4).toTypedArray(),
+                            line[5].toIntOrNull() ?: 0,
+                            line[6].toIntOrNull() ?: 0,
+                        )
+                    )
                 }
             }
         }

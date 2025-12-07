@@ -3,7 +3,10 @@ package com.example.egzaminator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import java.io.Console
+import com.example.egzaminator.database.AppDatabase
+import com.example.egzaminator.database.CorrectQuestion
+import com.example.egzaminator.database.CsvUtils
+import com.example.egzaminator.database.DatabaseProvider
 
 class TestActivity : AppCompatActivity(R.layout.activity_test), OnNextQuestionListener {
     private var correctAnswers = 0
